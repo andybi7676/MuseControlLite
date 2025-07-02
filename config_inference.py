@@ -112,7 +112,7 @@ def get_config():
 
         # Works for ['audio], it works without a feature extractor, and could cooperate with other adapters
         #################
-        "audio_transformer_ckpt": "./model.safetensors",
+        "audio_transformer_ckpt": "./checkpoints/70000_Audio/model.safetensors",
 
         # Specialized for ['melody_stereo']
         ###############
