@@ -6,10 +6,10 @@ MuseControlLite is a fine-tuning method built on [stable-audio-open-1.0](https:/
 ![Alt Text](Melody_result.png)
 We have updated the results for MuseControlLite-stereo-Melody, which processes the melody of the two audio channels separately (same as ControlNet) and delivers an additional performance boost, results in **melody acuracy 7.6 % higher then ControlNet**. By contrast, the results reported in the paper mixed the melody from both channels.
 We povide captions for the MTG-Jamendo dataset in `ALL_condition_wo_SDD.json`, excluding any audio clips that contain vocals.
-## Todo (updated 6/23)
+## Todo (updated 7/1)
 - [x] [Colab impementation](https://colab.research.google.com/drive/1rR-Ncng_gSeb6hX0LY20SA4O9RCF-ZF3?usp=sharing) (Thanks to [YianLai0327](https://github.com/YianLai0327))
 - [x] MuseControlLite with the diffusers libary
-- [ ] **Release the checkpoint for audio condition (As soon as possible!)**
+- [x] **Release the checkpoint for audio condition (As soon as possible!)**
 - [ ] MuseControlLite with the stable-audio-tools libary
 - [ ] Put model on Huggingface
 - [ ] Provide scale-up version
