@@ -1,6 +1,6 @@
 def get_config():
     return {
-        "condition_type": ["rhythm"], #  you can choose any combinations in the two sets: ["dynamics", "rhythm", "melody_mono", "audio"],  ["melody_stereo", "audio"]
+        "condition_type": ["melody_stereo"], #  you can choose any combinations in the two sets: ["dynamics", "rhythm", "melody_mono", "audio"],  ["melody_stereo", "audio"]
                                     # When using audio, is recommend to use empty string "" as prompt
         "output_dir": "./generated_audio/melody_stereo",
 
@@ -43,7 +43,6 @@ def get_config():
         "show_result_and_plt": True,
 
         "audio_files": [
-            "/home/fundwotsai/MuseControlLite/melody_condition_audio/sample01.wav",
             "melody_condition_audio/49_piano.mp3",
             "melody_condition_audio/49_piano.mp3",
             "melody_condition_audio/49_piano.mp3",
