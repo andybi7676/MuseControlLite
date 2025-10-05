@@ -791,6 +791,7 @@ def process_musical_conditions(config, audio_file, condition_extractors, output_
             rhythm_curve = rnn_processor(original_path)
             rhythm_condition = torch.from_numpy(rhythm_curve).cuda()
             rhythm_condition = rhythm_condition.transpose(0,1).unsqueeze(0)
+            print("rhythm_condition", rhythm_condition.shape)
             extracted_rhythm_condition = condition_extractors["rhythm"](rhythm_condition.to(torch.float32))
             masked_extracted_rhythm_condition = torch.zeros_like(extracted_rhythm_condition)
             extracted_rhythm_condition = F.interpolate(extracted_rhythm_condition, size=1024, mode='linear', align_corners=False)
