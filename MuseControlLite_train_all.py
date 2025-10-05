@@ -1,4 +1,3 @@
-import argparse
 import itertools
 import math
 import os
@@ -11,7 +10,6 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import torch.nn as nn
-import torch.utils.checkpoint
 from accelerate import Accelerator
 from torch.utils.data import Dataset, random_split, DataLoader
 import torchaudio
@@ -19,8 +17,6 @@ from tqdm.auto import tqdm
 from diffusers.optimization import get_scheduler
 from diffusers.utils import check_min_version, is_wandb_available
 from diffusers.models.embeddings import get_1d_rotary_pos_embed
-from scipy.io.wavfile import write
-from scipy.signal import savgol_filter
 from diffusers.loaders import AttnProcsLayers
 import matplotlib
 matplotlib.use('Agg') # No pictures displayed 
@@ -28,8 +24,7 @@ import matplotlib.pyplot as plt
 import torch
 from safetensors.torch import load_file  # Import safetensors
 warnings.filterwarnings("ignore", category=FutureWarning)
-from utils.stable_audio_dataset_utils import Stereo, Mono, PhaseFlipper, PadCrop_Normalized_T
-from torchaudio import transforms as T
+from utils.stable_audio_dataset_utils import Stereo, Mono, PhaseFlipper
 import torch
 import soundfile as sf
 from pipeline.stable_audio_multi_cfg_pipe import StableAudioPipeline
@@ -48,8 +43,6 @@ from madmom.features.downbeats import DBNDownBeatTrackingProcessor,RNNDownBeatPr
 ### same way as stable audio loads audio file
 import gc
 torchaudio.set_audio_backend("sox_io")
-import datetime
-import torch.distributed as dist
 import time
 
 class AudioInversionDataset(Dataset):

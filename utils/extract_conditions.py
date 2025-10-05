@@ -1,18 +1,9 @@
-import os
 import torchaudio
 import numpy as np
-from tqdm import tqdm
 from scipy.signal import savgol_filter
-from multiprocessing import Pool, cpu_count
 import librosa
-import typing as tp
-from einops import rearrange
-from librosa import filters
 import torch
-from torch import nn
 import torchaudio
-import typing as tp
-import torch.nn.functional as F
 import scipy.signal as signal
 from torchaudio import transforms as T
 import torch
@@ -20,7 +11,6 @@ import torchaudio
 import librosa
 import numpy as np
 
-import numpy as np
 
 def compute_melody_v2(stereo_audio: torch.Tensor) -> np.ndarray:
     """

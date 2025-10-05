@@ -1,8 +1,8 @@
 def get_config():
     return {
-        "condition_type": ["audio"], #  you can choose any combinations in the two sets: ["dynamics", "rhythm", "melody_mono", "audio"],  ["melody_stereo", "audio"]
+        "condition_type": ["melody_stereo"], #  you can choose any combinations in the two sets: ["dynamics", "rhythm", "melody_mono", "audio"],  ["melody_stereo", "audio"]
                                     # When using audio, is recommend to use empty string "" as prompt
-        "output_dir": "./generated_audio/outpainting",
+        "output_dir": "./generated_audio/melody_stereo",
 
         "GPU_id": "0",
 
@@ -40,7 +40,7 @@ def get_config():
 
         "no_text": False, # Optional, set to true if no text prompt is needed (possible for audio inpainting or outpainting)
 
-        "show_result_and_plt": False,
+        "show_result_and_plt": True,
 
         "audio_files": [
             "melody_condition_audio/49_piano.mp3",
