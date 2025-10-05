@@ -2,7 +2,7 @@ def get_config():
     return {
         "condition_type": ["melody_stereo"], #  you can choose any combinations in the two sets: ["dynamics", "rhythm", "melody_mono", "audio"],  ["melody_stereo", "audio"]
                                     # When using audio, is recommend to use empty string "" as prompt
-        "output_dir": "./generated_audio/melody_stereo",
+        "output_dir": "./generated_audio/output",
 
         "GPU_id": "0",
 
