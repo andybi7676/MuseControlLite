@@ -640,7 +640,8 @@ def evaluate_and_plot_results(audio_file, gen_file_path, output_dir, i):
     
     # Adjust layout to avoid overlap
     processor = RNNDownBeatProcessor()
-    input_probabilities = processor(audio_file)
+    original_path = os.path.join(output_dir, f"original_{i}.wav")
+    input_probabilities = processor(original_path)
     generated_probabilities = processor(gen_file_path)
     hmm_processor = DBNDownBeatTrackingProcessor(beats_per_bar=[3,4], fps=100)
     input_timestamps = hmm_processor(input_probabilities)
