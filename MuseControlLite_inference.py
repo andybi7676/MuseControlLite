@@ -58,17 +58,19 @@ def main(config):
                     generator = torch.Generator().manual_seed(42)
                 ).audios 
                 # save audio
-                gen_file_path = os.path.join(output_dir, f"test_{i}.wav")
+                audio_file_name = os.path.basename(audio_file)
+                audio_fid = audio_file_name.split('.')[0]
+                gen_file_path = os.path.join(output_dir, f"{audio_fid}_gen.wav")
                 output = waveform[0].T.float().cpu().numpy()
                 sf.write(gen_file_path, output, MuseControlLite.vae.sampling_rate)
-                original_path = os.path.join(output_dir, f"original_{i}.wav")
+                original_path = os.path.join(output_dir, f"original_{audio_fid}.wav")
                 audio = load_audio_file(audio_file)
                 if audio is not None:
                     original_audio = audio.T.float().cpu().numpy()
                     sf.write(original_path, original_audio, MuseControlLite.vae.sampling_rate)
                 if config['show_result_and_plt']:
                     dynamics_score, rhythm_score, melody_score = evaluate_and_plot_results(
-                        audio_file, gen_file_path, output_dir, i
+                        audio_file, gen_file_path, output_dir, audio_fid
                     )
                     score_dynamics.append(dynamics_score)
                     score_rhythm.append(rhythm_score)
@@ -83,17 +85,59 @@ def main(config):
                     audio_end_in_s=2097152/44100,
                     generator = torch.Generator().manual_seed(42)
                 ).audios
+                audio_file = config["audio_files"][i]
+                audio_file_name = os.path.basename(config["audio_files"][i])
+                audio_fid = audio_file_name.split('.')[0]
                 output = audio[0].T.float().cpu().numpy()
-                file_path = os.path.join(output_dir, f"{prompt_texts}.wav")
-                sf.write(file_path, output, stable_audio.vae.sampling_rate)         
+                gen_file_path = os.path.join(output_dir, f"{audio_fid}_gen.wav")
+                sf.write(gen_file_path, output, stable_audio.vae.sampling_rate)
+                original_path = os.path.join(output_dir, f"original_{audio_fid}.wav")
+                audio = load_audio_file(audio_file)
+                if audio is not None:
+                    original_audio = audio.T.float().cpu().numpy()
+                    sf.write(original_path, original_audio, stable_audio.vae.sampling_rate)
+                if config['show_result_and_plt']:
+                    dynamics_score, rhythm_score, melody_score = evaluate_and_plot_results(
+                        audio_file, gen_file_path, output_dir, audio_fid
+                    )
+                    score_dynamics.append(dynamics_score)
+                    score_rhythm.append(rhythm_score)
+                    score_melody.append(melody_score)        
         data_to_save = {"config": config}
         if config['show_result_and_plt']:
-            data_to_save["score_dynamics"] = np.mean(score_dynamics)
-            data_to_save["score_rhythm"] = np.mean(score_rhythm)
-            data_to_save["score_melody"] = np.mean(score_melody)
+            data_to_save["score_dynamics"] = {
+                'mean': np.mean(score_dynamics),
+                'details': [
+                    {
+                        "audio_file": os.path.basename(config["audio_files"][i]),
+                        "score": score
+                    }
+                    for i, score in enumerate(score_dynamics)
+                ]
+            }
+            data_to_save["score_rhythm"] = {
+                'mean': np.mean(score_rhythm),
+                'details': [
+                    {
+                        "audio_file": os.path.basename(config["audio_files"][i]),
+                        "score": score
+                    }
+                    for i, score in enumerate(score_rhythm)
+                ]
+            }
+            data_to_save["score_melody"] = {
+                'mean': np.mean(score_melody),
+                'details': [
+                    {
+                        "audio_file": os.path.basename(config["audio_files"][i]),
+                        "score": score
+                    }
+                    for i, score in enumerate(score_melody)
+                ]
+            }
         file_path = os.path.join(output_dir, "result.txt")
         with open(file_path, "w") as file:
-            json.dump(data_to_save, file, indent=4)
+            json.dump(data_to_save, file, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="AP-adapter Inference Script")
